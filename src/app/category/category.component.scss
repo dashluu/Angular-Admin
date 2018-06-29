@@ -1,0 +1,33 @@
+.mode-btn, .mode-btn-inactive {
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 10px;
+    margin-right: 10px;
+    border: none;
+    background-color: transparent;
+}
+
+.mode-btn {
+    color: #5ac8fa;
+}
+
+.mode-btn-inactive {
+    color: #455A64;
+}
+
+#submit-category-btn {
+    color: #fafafa;
+    border: none;
+    background: linear-gradient(#455A64, #37474F);
+    border-radius: 3px;
+    font-size: 13px;
+    width: 45px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 10px;
+    margin-right: 10px;
+}

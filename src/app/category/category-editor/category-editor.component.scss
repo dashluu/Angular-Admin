@@ -1,0 +1,22 @@
+.category-input {
+    width: 100%;
+    padding: 3px 5px 3px 5px;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid #37474F;
+    background-color: #37474F;
+    font-size: 14px;
+    color: #fafafa;
+    font-weight: 400;
+    margin-bottom: 10px;
+}
+
+.category-input:disabled {
+    background-color: transparent;
+    border: 1px solid #37474F;
+}
+
+#category-description-input {
+    overflow: hidden;
+    resize: none;
+}

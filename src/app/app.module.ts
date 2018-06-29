@@ -11,6 +11,8 @@ import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
 import { HomeModule } from './home/home.module';
 import { AboutModule } from './about/about.module';
+import { CategoryModule } from './category/category.module';
+import { PostModule } from './post/post.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -27,6 +29,8 @@ import { AppRoutingModule } from './app-routing.module';
     SharedModule,
     HomeModule,
     AboutModule,
+    CategoryModule,
+    PostModule,
     LoginModule,
     AppRoutingModule
   ],
