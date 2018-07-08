@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
-import { CategoryComponent } from './category.component';
+import { PostGridComponent } from './post-grid.component';
 
 const routes: Routes = [
   Route.withShell([
-    { path: 'categories', component: CategoryComponent, data: { title: extract('Categories') } }
+    { path: 'posts', component: PostGridComponent, data: { title: extract('Posts') } },
+    { path: 'posts/categories/:name', component: PostGridComponent, data: { title: extract('Posts') } }
   ])
 ];
 
@@ -15,4 +16,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class CategoryRoutingModule { }
+export class PostGridRoutingModule { }

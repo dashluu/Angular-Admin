@@ -3,7 +3,16 @@
  * Framework overrides and customization goes here.
  */
 body {
-    background-color: #263238;
+    // background-color: #263238;
+    background-image: url("/assets/background.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center center;
+}
+
+.bg-dark {
+    background-color: #1a1a1a !important;
 }
 
 * {

@@ -1,0 +1,49 @@
+$background: rgba(13, 13, 13, 0.85);
+$border: #0d0d0d;
+$font: #fafafa;
+$blue: #007aff;
+$red: #ff2d55;
+
+.comment-container {
+    background-color: $background;
+    border-radius: 3px;
+    border: 1px solid $border;
+    margin-bottom: 10px;
+}
+
+.comment-action-btn {
+    outline: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.select-comment-btn {
+    color: $blue;
+}
+
+.delete-comment-btn {
+    color: $red;
+}
+
+.comment-username, .comment-content {
+    overflow-wrap: break-word;
+}
+
+.comment-username {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 10px;
+    color: $font;
+}
+
+.comment-content {
+    font-size: 14px;
+    color: $font;
+    padding-bottom: 5px;
+}

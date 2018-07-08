@@ -1,0 +1,10 @@
+<div class="container">
+  <div class="row category-card">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <button type="button" class="select-category-btn" (click)="selectCategoryCard()">Select</button>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 category-data-container">Name: <strong #categoryNameContainer>{{ categoryModel.name }}</strong></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 category-data-container">Post Count: <span>{{ categoryModel.postCount }}</span></div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 category-data-container">Description: <span #categoryDescriptionContainer>{{ categoryModel.description }}</span></div>
+  </div>
+</div>

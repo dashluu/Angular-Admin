@@ -1,0 +1,22 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="post-card-action-container">
+        <button (click)="editPost()" class="select-post-card-btn post-card-action-btn">Edit</button>
+        <button (click)="deletePost()" class="delete-post-card-btn post-card-action-btn">Delete</button>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 post-card-container-col-1">
+      <div class="post-card-img-container">
+        <img class="post-card-img" src="{{ postCardModel.thumbnailImageSrc }}" />
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 post-card-container-col-2">
+      <div class="post-card-content-container">
+        <div class="post-card-title">{{ postCardModel.title }}</div>
+        <div class="post-card-date">{{ postCardModel.createdDate }} - {{ postCardModel.updatedDate }}</div>
+        <div class="post-card-summary">{{ postCardModel.shortDescription }}</div>
+      </div>
+    </div>
+  </div>
+</div>

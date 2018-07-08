@@ -1,0 +1,35 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-4">
+            <input type="text" id="post-card-search-box" placeholder="Search" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!isPostCardGridEmpty">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="nav-comment-container">
+              <button class="nav-comment-page-btn" *ngIf="pageNumber > 1" (click)="getPreviousPostCards()">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <span class="nav-comment-page-indicator">
+                <span class="nav-comment-page-number">{{ pageNumber }}</span> of
+                <span class="nav-comment-page-number">{{ pages }}</span>
+              </span>
+              <button class="nav-comment-page-btn" *ngIf="pageNumber < pages" (click)="getNextPostCards()">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #postCardGridContainer>
+    </ng-template>
+  </div>
+</div>

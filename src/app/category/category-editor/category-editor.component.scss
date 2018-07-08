@@ -1,22 +1,71 @@
+$background: #1a1a1a;
+$border: #1a1a1a;
+$font: #fafafa;
+$blue: #007aff;
+$red: #ff2d55;
+
 .category-input {
     width: 100%;
     padding: 3px 5px 3px 5px;
     outline: none;
     border-radius: 3px;
-    border: 1px solid #37474F;
-    background-color: #37474F;
+    border: 1px solid $border;
+    background-color: $background;
     font-size: 14px;
-    color: #fafafa;
+    color: $font;
     font-weight: 400;
     margin-bottom: 10px;
 }
 
 .category-input:disabled {
-    background-color: transparent;
-    border: 1px solid #37474F;
+    background-color: #0d0d0d;
+    border: 1px solid #0d0d0d;
 }
 
 #category-description-input {
     overflow: hidden;
     resize: none;
+}
+
+.mode-btn-container {
+    background-color: $background;
+    border: 1px solid $border;
+    border-radius: 3px;
+    display: inline-block;
+    margin-bottom: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-bottom: 2px;
+}
+
+.mode-btn, .mode-btn-inactive {
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}
+
+.mode-btn {
+    color: $blue;
+}
+
+.mode-btn-inactive {
+    color: $font;
+}
+
+#submit-category-btn {
+    color: $blue;
+    background-color: $background;
+    border: 1px solid $border;
+    border-radius: 3px;
+    font-size: 13px;
+    width: 45px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    cursor: pointer;
+    outline: none;
+    margin-bottom: 10px;
+    margin-right: 10px;
 }

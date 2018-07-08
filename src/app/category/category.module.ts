@@ -5,8 +5,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { CategoryRoutingModule } from './category-routing.module';
 import { CategoryComponent } from './category.component';
 import { CategoryEditorComponent } from './category-editor/category-editor.component';
-import { CategoryTableComponent } from './category-table/category-table.component';
-import { CategoryRowComponent } from './category-table/category-row/category-row.component';
+import { CategoryListComponent } from './category-list/category-list.component';
+import { CategoryCardComponent } from './category-list/category-card/category-card.component';
 
 @NgModule({
   imports: [
@@ -16,8 +16,8 @@ import { CategoryRowComponent } from './category-table/category-row/category-row
   ],
   declarations: [CategoryComponent, 
     CategoryEditorComponent, 
-    CategoryTableComponent, 
-    CategoryRowComponent],
-  entryComponents: [CategoryRowComponent]
+    CategoryListComponent, 
+    CategoryCardComponent],
+  entryComponents: [CategoryCardComponent]
 })
 export class CategoryModule { }

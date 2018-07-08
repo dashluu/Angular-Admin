@@ -2,11 +2,12 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
-import { CategoryComponent } from './category.component';
+import { CommentComponent } from './comment.component';
 
 const routes: Routes = [
   Route.withShell([
-    { path: 'categories', component: CategoryComponent, data: { title: extract('Categories') } }
+    { path: 'comments', component: CommentComponent, data: { title: extract('Comments') } },
+    { path: 'comments/posts/:id', component: CommentComponent, data: { title: extract('Comments') } }
   ])
 ];
 
@@ -15,4 +16,4 @@ const routes: Routes = [
   exports: [RouterModule],
   providers: []
 })
-export class CategoryRoutingModule { }
+export class CommentRoutingModule { }

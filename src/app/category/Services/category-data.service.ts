@@ -18,7 +18,7 @@ export class CategoryDataService {
 
     addCategory(name: string, description: string): Observable<Object> {
         let observableObject: Observable<Object> = this.http.post(
-            "/CategoryAPI/AddCategory",
+            "/Categories",
             JSON.stringify({
                 Name: name,
                 Description: description
@@ -29,12 +29,12 @@ export class CategoryDataService {
         return observableObject;
     }
 
-    updateCategory(id: string, name: string, description: string): Observable<Object> {
+    updateCategory(id: string, description: string): Observable<Object> {
+        let url: string = "/Categories/" + id;
+        
         let observableObject: Observable<Object> = this.http.post(
-            "/CategoryAPI/UpdateCategory",
+            url,
             JSON.stringify({
-                CategoryId: id,
-                Name: name,
                 Description: description
             }),
             this.headers
@@ -44,7 +44,7 @@ export class CategoryDataService {
     }
 
     getCategories(): Observable<Object> {
-        let observableObject: Observable<Object> = this.http.get("/CategoryAPI/GetCategories");
+        let observableObject: Observable<Object> = this.http.get("/Categories");
         return observableObject;
     }
 }

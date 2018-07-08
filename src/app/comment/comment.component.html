@@ -1,0 +1,41 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+          <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8">
+            <input type="text" id="comment-search-box" placeholder="Search" (keyup)="searchCommentKeyEvent($event)"/>
+          </div>
+          <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!isCommentListEmpty">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+          <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8">
+            <div class="nav-comment-container">
+              <button class="nav-comment-page-btn" *ngIf="pageNumber > 1" (click)="getPreviousComments()">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <span class="nav-comment-page-indicator"><span class="nav-comment-page-number">{{ pageNumber }}</span> of <span class="nav-comment-page-number">{{ pages }}</span></span>
+              <button class="nav-comment-page-btn" *ngIf="pageNumber < pages" (click)="getNextComments()">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+              <button class="parent-comment-page-btn" *ngIf="childMode" (click)="backToParentComment()">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+        </div>
+      </div>
+    </div>
+    <ng-template #parentCommentContainer>
+    </ng-template>
+    <ng-template #commentListContainer>
+    </ng-template>
+  </div>
+</div>

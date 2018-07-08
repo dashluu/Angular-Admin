@@ -1,0 +1,21 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+    <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8">
+      <div class="container comment-container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comment-action-container" *ngIf="actionable">
+            <button (click)="showChildComments()" class="select-comment-btn comment-action-btn">Show more</button>
+            <button (click)="deleteComment()" class="delete-comment-btn comment-action-btn">Delete</button>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comment-text comment-username">Whatever</div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comment-text comment-content">{{ commentModel.content }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+  </div>
+</div>
+
+
+

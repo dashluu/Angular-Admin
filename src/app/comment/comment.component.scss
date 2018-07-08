@@ -1,0 +1,47 @@
+$background: #1a1a1a;
+$border: #1a1a1a;
+$font: #fafafa;
+$blue: #007aff;
+$red: #ff2d55;
+
+#comment-search-box {
+    width: 100%;
+    margin-bottom: 10px;
+    background-color: $background;
+    border: 1px solid $border;
+    border-radius: 3px;
+    padding-left: 5px;
+    color: $font;
+    outline: none;
+    font-size: 14px;
+}
+
+.nav-comment-container {
+    margin-bottom: 10px;
+    background-color: $background;
+    display: inline-block;
+    border: 1px solid $border;
+    border-radius: 3px;
+    color: $font;
+}
+
+.nav-comment-page-btn, .parent-comment-page-btn {
+    border: none;
+    background-color: transparent;
+    color: $blue;
+    padding: 0;
+    font-size: 13px;
+    cursor: pointer;
+    outline: none;
+}
+
+.nav-comment-page-indicator, .nav-comment-page-btn, .parent-comment-page-btn {
+    margin-right: 5px;
+    margin-left: 5px;
+    margin-bottom: 3px;
+}
+
+.nav-comment-page-indicator {
+    font-weight: 600;
+}
+

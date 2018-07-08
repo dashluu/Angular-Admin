@@ -10,7 +10,7 @@ export class CategoryMapperService {
             id: object["CategoryId"],
             name: object["Name"],
             description: object["Description"],
-            statistics: object["Statistics"]
+            postCount: object["PostCount"]
         };
 
         return categoryModel;

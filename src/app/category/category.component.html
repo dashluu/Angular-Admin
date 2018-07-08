@@ -1,21 +1,6 @@
 <div class="container">
     <div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <button type="button" id="add-category-btn" class="mode-btn" (click)="addModeOn()">Add</button>
-            <button type="button" id="edit-category-btn" class="mode-btn-inactive" (click)="editModeOn()">Edit</button>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-5">
-            <app-category-editor></app-category-editor>
-            <div class="row">
-                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-                    <button type="button" id="submit-category-btn" (click)="submitCategory()">
-                        <i class="fas fa-cloud-upload-alt"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-7">
-            <app-category-table></app-category-table>
-        </div>
+        <app-category-editor></app-category-editor>
+        <app-category-list></app-category-list>
     </div>
 </div>
