@@ -7,10 +7,10 @@
       </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6">
-      <input type="text" class="category-input" placeholder="Name" id="category-name-input" name="Name" />
+      <input type="text" class="category-input" placeholder="Name" id="category-name-input" name="Name" (keyup)="updateNameInput($event)" [(ngModel)]="editedCategoryModel.name" />
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-      <textarea class="category-input" placeholder="Description" id="category-description-input" name="Description"></textarea>
+      <textarea class="category-input" placeholder="Description" id="category-description-input" name="Description" (keyup)="updateDescriptionInput($event)" [(ngModel)]="editedCategoryModel.description"></textarea>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <button type="button" id="submit-category-btn" (click)="submitCategory()">

@@ -4,6 +4,18 @@ $font: #fafafa;
 $blue: #007aff;
 $red: #ff2d55;
 
+#new-post-btn {
+    background-color: $background;
+    border: 1px solid $border;
+    border-radius: 3px;
+    font-size: 13px;
+    width: 45px;
+    color: $blue;
+    outline: none;
+    cursor: pointer;
+    margin-bottom: 10px;
+}
+
 #post-card-search-box {
     background-color: $background;
     border: 1px solid $border;

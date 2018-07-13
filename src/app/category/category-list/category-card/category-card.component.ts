@@ -7,18 +7,13 @@ import { CategoryUIService } from '@app/category/Services/category-ui.service';
   templateUrl: './category-card.component.html',
   styleUrls: ['./category-card.component.scss']
 })
-export class CategoryCardComponent implements OnInit, AfterViewChecked {
+export class CategoryCardComponent implements OnInit {
   @HostBinding("class.col-lg-12") bootstrapLgClass: boolean = true;
   @HostBinding("class.col-md-12") bootstrapMdClass: boolean = true;
   @HostBinding("class.col-sm-12") bootstrapSmClass: boolean = true;
   @HostBinding("class.col-xs-12") bootstrapXsClass: boolean = true;
   
-  @Input() categoryModel: CategoryModel;
-  @ViewChild("categoryNameContainer") categoryNameContainerRef: ElementRef;
-  @ViewChild("categoryDescriptionContainer") categoryDescriptionContainerRef: ElementRef;
-
-  categoryNameContainer: HTMLElement;
-  categoryDescriptionContainer: HTMLElement;
+  categoryModel: CategoryModel;
 
   constructor(private categoryUIService: CategoryUIService) {
   }
@@ -26,17 +21,12 @@ export class CategoryCardComponent implements OnInit, AfterViewChecked {
   ngOnInit() {
   }
 
-  ngAfterViewChecked(): void {
-    this.categoryNameContainer = <HTMLElement>this.categoryNameContainerRef.nativeElement;
-    this.categoryDescriptionContainer = <HTMLElement>this.categoryDescriptionContainerRef.nativeElement;
-  }
-
   getCategoryName(): string {
-    return this.categoryNameContainer.innerHTML;
+    return this.categoryModel.name;
   }
 
   getCategoryDescription(): string {
-    return this.categoryDescriptionContainer.innerHTML;
+    return this.categoryModel.description;
   }
 
   getCategoryId(): string {
@@ -44,11 +34,11 @@ export class CategoryCardComponent implements OnInit, AfterViewChecked {
   }
 
   setCategoryName(name: string) {
-    this.categoryNameContainer.innerHTML = name;
+    this.categoryModel.name = name;
   }
 
   setCategoryDescription(description: string) {
-    this.categoryDescriptionContainer.innerHTML = description;
+    this.categoryModel.description = description;
   }
 
   selectCategoryCard() {

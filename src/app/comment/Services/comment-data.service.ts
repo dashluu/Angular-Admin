@@ -12,6 +12,8 @@ export class CommentDataService {
     }
 
     getCommentPaginationModel(postId:string, pageNumber: number): Observable<Object> {
+        let url: string = "/Comments";
+
         let options = {
             params: new HttpParams()
                 .set("postId", postId)
@@ -19,25 +21,28 @@ export class CommentDataService {
                 .set("pageSize", this.commentPageSize.toString())
         };
 
-        let observableObject: Observable<Object> = this.http.get("/Comments", options);
+        let observableObject: Observable<Object> = this.http.get(url, options);
 
         return observableObject;
     }
 
     getChildCommentPaginationModel(commentId: string, pageNumber: number): Observable<Object> {
+        let url: string = "/Comments/" + commentId + "/ChildComments";
+
         let options = {
             params: new HttpParams()
                 .set("pageNumber", pageNumber.toString())
                 .set("pageSize", this.commentPageSize.toString())
         };
 
-        let url: string = "/Comments/" + commentId + "/ChildComments";
         let observableObject: Observable<Object> = this.http.get(url, options);
 
         return observableObject;
     }
 
     searchCommentWithPaginationModel(postId: string, searchQuery: string, pageNumber: number): Observable<Object> {
+        let url: string = "/Comments/Search";
+        
         let options = {
             headers: new HttpHeaders({
                 'Content-Type': 'application/json'
@@ -49,7 +54,7 @@ export class CommentDataService {
         };
         
         let observableObject: Observable<Object> = this.http.post(
-            "/Comments/Search",
+            url,
             JSON.stringify({
                 Query: searchQuery
             }),

@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
+import { FormsModule } from '@angular/forms';
 import { CategoryRoutingModule } from './category-routing.module';
 import { CategoryComponent } from './category.component';
 import { CategoryEditorComponent } from './category-editor/category-editor.component';
@@ -11,6 +12,7 @@ import { CategoryCardComponent } from './category-list/category-card/category-ca
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     CategoryRoutingModule,
     TranslateModule
   ],

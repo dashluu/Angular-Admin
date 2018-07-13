@@ -13,7 +13,8 @@ export class PostCardMapperService {
             createdDate: object["CreatedDate"],
             updatedDate: object["UpdatedDate"],
             shortDescription: object["ShortDescription"],
-            thumbnailImageSrc: object["ThumbnailImageSrc"]
+            thumbnailImageSrc: object["ThumbnailImageSrc"],
+            commentCount: object["CommentCount"]
         };
 
         return postCardModel;

@@ -5,6 +5,7 @@ export class PostCardModel {
     updatedDate: string;
     shortDescription: string;
     thumbnailImageSrc: string;
+    commentCount: number;
 
     constructor() {}
 }

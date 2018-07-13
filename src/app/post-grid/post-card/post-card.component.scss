@@ -3,6 +3,7 @@ $border: #0d0d0d;
 $font: #fafafa;
 $blue: #007aff;
 $red: #ff2d55;
+$green: #4cd964;
 
 :host {
     margin-bottom: 30px;
@@ -30,6 +31,10 @@ $red: #ff2d55;
     margin-bottom: 5px;
 }
 
+.show-post-comments-btn {
+    color: $green;
+}
+
 .select-post-card-btn {
     color: $blue;
 }
@@ -38,7 +43,7 @@ $red: #ff2d55;
     color: $red;
 }
 
-.post-card-title, .post-card-summary, .post-card-author, .post-card-date, .post-card-category {
+.post-card-title, .post-card-summary, .post-card-author, .post-card-date, .post-card-category, .post-card-comment-count {
     color: $font;
     margin-bottom: 5px;
 }
@@ -76,4 +81,9 @@ $red: #ff2d55;
 .post-card-summary {
     font-size: 14px;
     font-weight: 400;
+}
+
+.post-card-comment-count {
+    font-size: 14px;
+    font-weight: 600;
 }

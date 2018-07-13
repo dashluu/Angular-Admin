@@ -1,12 +1,12 @@
-import { Component, OnInit, ViewChild, ComponentRef, ViewContainerRef, ComponentFactoryResolver, Input, AfterViewChecked, EventEmitter } from '@angular/core';
+import { Component, OnInit, ViewChild, ComponentRef, ViewContainerRef, ComponentFactoryResolver, Input, AfterViewChecked, AfterViewInit, OnDestroy } from '@angular/core';
 import { CommentCardComponent } from '@app/comment/comment-card/comment-card.component';
 import { CommentModel } from '@app/comment/Models/comment.model';
 import { CommentDataService } from '@app/comment/Services/comment-data.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { CommentPaginationModel } from '@app/comment/Models/comment-pagination.model';
 import { CommentMapperService } from '@app/comment/Services/comment-mapper.service';
 import { CommentUIService } from '@app/comment/Services/comment-ui.service';
-import { ActivatedRoute, Router, ParamMap } from '@angular/router';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
 
 @Component({
@@ -14,9 +14,9 @@ import { switchMap } from 'rxjs/operators';
   templateUrl: './comment.component.html',
   styleUrls: ['./comment.component.scss']
 })
-export class CommentComponent implements OnInit, AfterViewChecked {
-  @Input() pageNumber: number;
-  @Input() pages: number;
+export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
+  pageNumber: number;
+  pages: number;
 
   commentPageNumber: number;
   childCommentPageNumber: number;
@@ -25,18 +25,20 @@ export class CommentComponent implements OnInit, AfterViewChecked {
   commentPages: number;
   childCommentPages: number;
   searchCommentPages: number;
-
-  @ViewChild('commentListContainer', { read: ViewContainerRef }) commentListContainer: any;
-  @ViewChild('parentCommentContainer', { read: ViewContainerRef }) parentCommentContainer: any;
-  componentRef: ComponentRef<CommentCardComponent>;
-  commentSearchBox: HTMLInputElement;
   
   selectedCommentModel: CommentModel;
   childMode: boolean;
   searchMode: boolean;
   isCommentListEmpty: boolean;
-
   postId: string = "";
+
+  @ViewChild('commentListContainer', { read: ViewContainerRef }) commentListContainer: any;
+  @ViewChild('parentCommentContainer', { read: ViewContainerRef }) parentCommentContainer: any;
+  componentRef: ComponentRef<CommentCardComponent>;
+
+  commentSearchBox: HTMLInputElement;
+
+  subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -44,7 +46,8 @@ export class CommentComponent implements OnInit, AfterViewChecked {
     private commentMapperService: CommentMapperService,
     private commentUIService: CommentUIService,
     private componentFactoryResolver: ComponentFactoryResolver
-  ) {
+  ) 
+  {
   }
 
   ngOnInit() {
@@ -65,17 +68,31 @@ export class CommentComponent implements OnInit, AfterViewChecked {
       })
     );
 
-    observableObject.subscribe(object => {
+    let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
         this.getCommentsCallback(object["data"]);
       }
     });
 
+    this.subscriptions.push(subscription);
+
     this.commentUIService.setCommentUI(this);
   }
 
-  ngAfterViewChecked(): void {
+  ngAfterViewInit(): void {
     this.commentSearchBox = <HTMLInputElement>document.getElementById("comment-search-box");
+  }
+
+  ngOnDestroy(): void {
+    if (this.componentRef !== undefined) {
+      this.componentRef.destroy();
+    }
+
+    let subscriptionCount = this.subscriptions.length;
+
+    for (let i = 0; i < subscriptionCount; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 
   resetChildMode() {
@@ -105,11 +122,13 @@ export class CommentComponent implements OnInit, AfterViewChecked {
   getComments() {
     let observableObject: Observable<Object> = this.commentDataService.getCommentPaginationModel(this.postId, this.commentPageNumber);
     
-    observableObject.subscribe(object => {
+    let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
         this.getCommentsCallback(object["data"]);
       }
     });
+
+    this.subscriptions.push(subscription);
   }
 
   getCommentsCallback(object: Object) {
@@ -132,7 +151,7 @@ export class CommentComponent implements OnInit, AfterViewChecked {
   getChildComments() {
     let observableObject: Observable<Object> = this.commentDataService.getChildCommentPaginationModel(this.selectedCommentModel.id, this.childCommentPageNumber);
 
-    observableObject.subscribe(object => {
+    let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
         let commentPaginationModel: CommentPaginationModel = this.commentMapperService.mapObjectToCommentPaginationModel(object["data"]);
         
@@ -158,6 +177,8 @@ export class CommentComponent implements OnInit, AfterViewChecked {
         this.isCommentListEmpty = this.pages === 0;
       }
     });
+
+    this.subscriptions.push(subscription);
   }
 
   searchCommentKeyEvent(event: any) {
@@ -183,7 +204,7 @@ export class CommentComponent implements OnInit, AfterViewChecked {
 
     let observableObject: Observable<Object> = this.commentDataService.searchCommentWithPaginationModel(this.postId, searchQuery, this.searchCommentPageNumber);
 
-    observableObject.subscribe(object => {
+    let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
         let commentPaginationModel: CommentPaginationModel = this.commentMapperService.mapObjectToCommentPaginationModel(object["data"]);
         
@@ -201,6 +222,8 @@ export class CommentComponent implements OnInit, AfterViewChecked {
         this.isCommentListEmpty = this.pages === 0;
       }
     });
+
+    this.subscriptions.push(subscription);
   }
 
   clearParentCommentView() {
@@ -282,11 +305,13 @@ export class CommentComponent implements OnInit, AfterViewChecked {
     
     let observableObject: Observable<Object> = this.commentDataService.deleteComment(this.postId, commentId, this.commentPageNumber);
     
-    observableObject.subscribe(object => {
+    let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
         this.getCommentsCallback(object["data"]);
       }
     });
+
+    this.subscriptions.push(subscription);
   }
 
 }

@@ -1,0 +1,45 @@
+$background: rgba(26, 26, 26, 0.85);
+$border: #1a1a1a;
+$font: #fafafa;
+$blue: #007aff;
+$red: #ff2d55;
+
+.title {
+    font-weight: 700;
+    font-size: 30px;
+    color: $font;
+    margin-bottom: 20px;
+}
+
+.post-input {
+    width: 100%;
+    padding: 3px 5px 3px 5px;
+    outline: none;
+    border-radius: 3px;
+    border: 1px solid $border;
+    background-color: $background;
+    font-size: 14px;
+    color: $font;
+    font-weight: 400;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.post-textarea {
+    resize: none;
+    height: 100px;
+}
+
+#submit-post-btn {
+    color: $blue;
+    background-color: $background;
+    border: 1px solid $border;
+    border-radius: 3px;
+    font-size: 13px;
+    width: 45px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    cursor: pointer;
+    outline: none;
+    margin-top: 10px;
+}

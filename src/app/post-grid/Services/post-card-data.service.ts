@@ -12,6 +12,8 @@ export class PostCardDataService {
     }
 
     getPostCardPaginationModel(category: string, pageNumber: number): Observable<Object> {
+        let url: string = "/Posts";
+        
         let options = {
             params: new HttpParams()
                 .set("category", category)
@@ -19,7 +21,7 @@ export class PostCardDataService {
                 .set("pageSize", this.postCardPageSize.toString())
         };
 
-        let observableObject: Observable<Object> = this.http.get("/Posts", options);
+        let observableObject: Observable<Object> = this.http.get(url, options);
 
         return observableObject;
     }

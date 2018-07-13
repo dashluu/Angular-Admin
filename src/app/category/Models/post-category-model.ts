@@ -1,6 +1,5 @@
-export class CategoryModel {
+export class PostCategoryModel {
     id: string;
     name: string;
-    description: string;
     postCount: number;
 }

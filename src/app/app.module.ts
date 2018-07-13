@@ -13,7 +13,8 @@ import { HomeModule } from './home/home.module';
 import { AboutModule } from './about/about.module';
 import { CategoryModule } from './category/category.module';
 import { CommentModule } from './comment/comment.module';
-import { PostGridModule } from './post-grid/post-grid.module'
+import { PostGridModule } from './post-grid/post-grid.module';
+import { PostEditorModule } from './post-editor/post-editor.module';
 import { LoginModule } from './login/login.module';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -33,6 +34,7 @@ import { AppRoutingModule } from './app-routing.module';
     CategoryModule,
     CommentModule,
     PostGridModule,
+    PostEditorModule,
     LoginModule,
     AppRoutingModule
   ],

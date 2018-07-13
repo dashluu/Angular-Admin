@@ -3,6 +3,7 @@ import { CategoryListComponent } from "@app/category/category-list/category-list
 import { CategoryModel } from "@app/category/Models/category.model";
 import { CategoryCardComponent } from "@app/category/category-list/category-card/category-card.component";
 import { CategoryEditorComponent } from "@app/category/category-editor/category-editor.component";
+import { CategoryMapperService } from "@app/category/Services/category-mapper.service";
 
 @Injectable({
     providedIn: 'root'
@@ -12,7 +13,7 @@ export class CategoryUIService {
     categoryEditor: CategoryEditorComponent;
     selectedCategoryCard: CategoryCardComponent;
 
-    constructor() {}
+    constructor(private categoryMapperService: CategoryMapperService) {}
 
     getCategoryId(): string {
         return this.selectedCategoryCard.getCategoryId();
@@ -33,14 +34,8 @@ export class CategoryUIService {
         this.categoryEditor.editModeOn();
     }
 
-    addCategoryCallback(id: string) {
-        let categoryModel: CategoryModel = {
-            id: id,
-            name: this.categoryEditor.getCategoryName(),
-            description: this.categoryEditor.getCategoryDescription(),
-            postCount: 0
-        };
-        
+    addCategoryCallback(object: Object) {
+        let categoryModel: CategoryModel = this.categoryMapperService.mapCategoryModelServerToClient(object);
         this.categoryList.createCategoryCard(categoryModel);
         this.categoryEditor.clearInput();
     }

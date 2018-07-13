@@ -1,10 +1,10 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, OnDestroy } from '@angular/core';
 import { PostCardComponent } from '@app/post-grid/post-card/post-card.component';
 import { PostCardModel } from '@app/post-grid/Models/post-card.model';
 import { PostCardDataService } from '@app/post-grid/Services/post-card-data.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { switchMap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { PostCardMapperService } from '@app/post-grid/Services/post-card-mapper.service';
 import { PostCardPaginationModel } from '@app/post-grid/Models/post-card-pagination.model';
 import { PostGridUIService } from '@app/post-grid/Services/post-grid-ui.service';
@@ -14,7 +14,7 @@ import { PostGridUIService } from '@app/post-grid/Services/post-grid-ui.service'
   templateUrl: './post-grid.component.html',
   styleUrls: ['./post-grid.component.scss']
 })
-export class PostGridComponent implements OnInit {
+export class PostGridComponent implements OnInit, OnDestroy {
   @ViewChild('postCardGridContainer', { read: ViewContainerRef }) postCardGridContainer: any;
   componentRef: ComponentRef<PostCardComponent>;
 
@@ -32,6 +32,8 @@ export class PostGridComponent implements OnInit {
   postCardPages: number;
 
   isPostCardGridEmpty: boolean;
+
+  subscriptions: Subscription[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -60,13 +62,27 @@ export class PostGridComponent implements OnInit {
       })
     );
 
-    observableObject.subscribe(object => {
+    let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
         this.getPostCardsCallback(object["data"]);
       }
     });
 
+    this.subscriptions.push(subscription);
+
     this.postGridUIService.setPostGridUI(this);
+  }
+
+  ngOnDestroy(): void {
+    if (this.componentRef !== undefined) {
+      this.componentRef.destroy();
+    }
+
+    let subscriptionCount = this.subscriptions.length;
+
+    for (let i = 0; i < subscriptionCount; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
   }
 
   resetSearchMode() {
@@ -82,11 +98,14 @@ export class PostGridComponent implements OnInit {
 
   getPostCards() {
     let observableObject: Observable<Object> = this.postCardDataService.getPostCardPaginationModel(this.category, this.postCardPageNumber);
-    observableObject.subscribe(object => {
+    
+    let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
         this.getPostCardsCallback(object["data"]);
       }
     });
+
+    this.subscriptions.push(subscription);
   }
 
   deletePost(postId: string) {
@@ -102,11 +121,13 @@ export class PostGridComponent implements OnInit {
 
     let observableObject: Observable<Object> = this.postCardDataService.deletePost(this.category, postId, this.postCardPageNumber);
 
-    observableObject.subscribe(object => {
+    let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
         this.getPostCardsCallback(object["data"]);
       }
     });
+
+    this.subscriptions.push(subscription);
   }
 
   getPostCardsCallback(object: Object) {

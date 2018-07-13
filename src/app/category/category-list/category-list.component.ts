@@ -2,7 +2,7 @@ import { Component, OnInit, ComponentFactoryResolver, ViewChild, ComponentRef, V
 import { CategoryModel } from '@app/category/Models/category.model';
 import { CategoryCardComponent } from '@app/category/category-list/category-card/category-card.component';
 import { CategoryUIService } from '@app/category/Services/category-ui.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { CategoryDataService } from '@app/category/Services/category-data.service';
 import { CategoryMapperService } from '@app/category/Services/category-mapper.service';
 
@@ -20,12 +20,15 @@ export class CategoryListComponent implements OnInit {
   @ViewChild('categoryListContainer', { read: ViewContainerRef }) categoryListContainer: any;
   componentRef: ComponentRef<CategoryCardComponent>;
 
+  subscription: Subscription;
+
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver,
     private categoryDataService: CategoryDataService,
     private categoryMapperService: CategoryMapperService,
     private categoryUIService: CategoryUIService
-  ) {
+  ) 
+  {
   }
 
   ngOnInit() {
@@ -33,9 +36,9 @@ export class CategoryListComponent implements OnInit {
     
     let observableObject: Observable<Object> = this.categoryDataService.getCategories();
 
-    observableObject.subscribe(object => {
+    this.subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
-        let categoryModels: CategoryModel[] = this.categoryMapperService.mapObjectsToCategoryModels(object["data"]);
+        let categoryModels: CategoryModel[] = this.categoryMapperService.mapCategoryModelsServerToClient(object["data"]);
         let categoryModelCount: number = categoryModels.length;
 
         for (let i: number = 0; i < categoryModelCount; i++) {
@@ -46,11 +49,15 @@ export class CategoryListComponent implements OnInit {
     });
   }
 
-  // ngOnDestroy() {
-  //   if (this.componentRef !== null) {
-  //     this.componentRef.destroy();
-  //   }
-  // }
+  ngOnDestroy() {
+    if (this.componentRef !== undefined) {
+      this.componentRef.destroy();
+    }
+
+    if (this.subscription != undefined) {
+      this.subscription.unsubscribe();
+    }
+  }
 
   createCategoryCard(categoryModel: CategoryModel) {
     let componentFactory = this.componentFactoryResolver.resolveComponentFactory(CategoryCardComponent);

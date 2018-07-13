@@ -8,7 +8,7 @@ import { PostGridUIService } from '@app/post-grid/Services/post-grid-ui.service'
   styleUrls: ['./post-card.component.scss'],
 })
 export class PostCardComponent implements OnInit, AfterViewChecked {
-  @Input() postCardModel: PostCardModel;
+  postCardModel: PostCardModel;
   @HostBinding("class.col-lg-4") bootstrapLgClass: boolean = true;
   @HostBinding("class.col-md-6") bootstrapMdClass: boolean = true;
   @HostBinding("class.col-sm-12") bootstrapSmClass: boolean = true;
@@ -21,10 +21,6 @@ export class PostCardComponent implements OnInit, AfterViewChecked {
 
   ngAfterViewChecked(): void {
     
-  }
-
-  editPost() {
-
   }
 
   deletePost() {

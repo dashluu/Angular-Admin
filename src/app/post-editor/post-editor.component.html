@@ -1,0 +1,43 @@
+<div class="container" id="editor-section">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-6">
+
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="title">Edit post</div>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <input type="text" class="post-input" placeholder="Title" id="post-title" [(ngModel)]="editedPostModel.title" />
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <select class="post-input" id="post-category"></select>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <input type="text" class="post-input" placeholder="Thumbnail image" id="post-thumbnail" [(ngModel)]="editedPostModel.thumbnailImageSrc" />
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <textarea class="post-input post-textarea" placeholder="Short description" id="post-short-description" [(ngModel)]="editedPostModel.shortDescription" ></textarea>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <textarea placeholder="Content" id="post-content"></textarea>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <button type="submit" id="submit-post-btn" (click)="submitEditedPost()">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-6"></div>
+  </div>
+</div>
+

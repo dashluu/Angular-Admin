@@ -1,55 +1,76 @@
-import { Component, OnInit, AfterViewChecked, HostBinding } from '@angular/core';
+import { Component, OnInit, HostBinding, AfterViewInit, Input, Output, EventEmitter, OnDestroy } from '@angular/core';
 import { CategoryUIService } from '@app/category/Services/category-ui.service';
 import { CategoryDataService } from '@app/category/Services/category-data.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { EditedCategoryModel } from '@app/category/Models/edited-category.model';
 
 @Component({
   selector: 'app-category-editor',
   templateUrl: './category-editor.component.html',
   styleUrls: ['./category-editor.component.scss']
 })
-export class CategoryEditorComponent implements OnInit, AfterViewChecked {
+export class CategoryEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   @HostBinding("class.col-lg-5") bootstrapLgClass: boolean = true;
   @HostBinding("class.col-md-12") bootstrapMdClass: boolean = true;
   @HostBinding("class.col-sm-12") bootstrapSmClass: boolean = true;
   @HostBinding("class.col-xs-12") bootstrapXsClass: boolean = true;
 
-  categoryNameInput: HTMLInputElement;
-  categoryDescriptionInput: HTMLInputElement;
+  editedCategoryModel: EditedCategoryModel = new EditedCategoryModel();
+
   addMode: boolean;
 
-  constructor(private categoryDataService: CategoryDataService,
-    private categoryUIService: CategoryUIService) {
+  categoryNameInput: HTMLInputElement;
 
+  subscriptions: Subscription[] = [];
+
+  constructor(
+    private categoryDataService: CategoryDataService,
+    private categoryUIService: CategoryUIService
+  ) 
+  {
     this.addMode = true;
-
   }
 
   ngOnInit() {
     this.categoryUIService.setCategoryEditor(this);
   }
 
-  ngAfterViewChecked(): void {
+  ngAfterViewInit(): void {
     this.categoryNameInput = <HTMLInputElement>document.getElementById("category-name-input");
-    this.categoryDescriptionInput = <HTMLInputElement>document.getElementById("category-description-input");
+  }
+
+  ngOnDestroy(): void {
+    let subscriptionCount = this.subscriptions.length;
+
+    for (let i = 0; i < subscriptionCount; i++) {
+      this.subscriptions[i].unsubscribe();
+    }
+  }
+
+  updateNameInput(event: any) {
+    this.editedCategoryModel.name = event.target.value;
+  }
+
+  updateDescriptionInput(event: any) {
+    this.editedCategoryModel.description = event.target.value;
   }
 
   getCategoryName(): string {
-    let categoryName: string = this.categoryNameInput.value;
+    let categoryName: string = this.editedCategoryModel.name;
     return categoryName;
   }
 
   getCategoryDescription(): string {
-    let categoryDescription: string = this.categoryDescriptionInput.value;
+    let categoryDescription: string = this.editedCategoryModel.description;
     return categoryDescription;
   }
 
   setCategoryName(categoryName: string) {
-    this.categoryNameInput.value = categoryName;
+    this.editedCategoryModel.name = categoryName;
   }
 
   setCategoryDescription(categoryDescription: string) {
-    this.categoryDescriptionInput.value = categoryDescription;
+    this.editedCategoryModel.description = categoryDescription;
   }
 
   clearInput() {
@@ -109,30 +130,36 @@ export class CategoryEditorComponent implements OnInit, AfterViewChecked {
       return;
     }
 
-    let categoryDescription: string = this.getCategoryDescription().trim();
+    let observableObject: Observable<Object> = this.categoryDataService.addCategory(this.editedCategoryModel);
 
-    let observableObject: Observable<Object> = this.categoryDataService.addCategory(categoryName, categoryDescription);
-
-    observableObject.subscribe(object => {
+    let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
-        //Perform adding new row on UI service's table.
         this.categoryUIService.addCategoryCallback(object["data"]);
       }
     });
+
+    this.subscriptions.push(subscription);
   }
 
   updateCategory() {
+    let categoryName: string = this.getCategoryName().trim();
+
+    if (categoryName === "") {
+      alert("Empty category name!");
+      return;
+    }
+
     let categoryId: string = this.categoryUIService.getCategoryId();
-    let categoryDescription: string = this.getCategoryDescription();
 
-    let observableObject: Observable<Object> = this.categoryDataService.updateCategory(categoryId, categoryDescription);
+    let observableObject: Observable<Object> = this.categoryDataService.updateCategory(categoryId, this.editedCategoryModel);
 
-    observableObject.subscribe(object => {
+    let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
-        //Perform updating row on UI service's table.
         this.categoryUIService.updateCategoryCallback();
       }
     });
+
+    this.subscriptions.push(subscription);
   }
 
 }

@@ -8,8 +8,7 @@ import { CommentUIService } from '@app/comment/Services/comment-ui.service';
   styleUrls: ['./comment-card.component.scss']
 })
 export class CommentCardComponent implements OnInit {
-  @Input() commentModel: CommentModel;
-
+  commentModel: CommentModel;
   actionable: boolean;
   
   @HostBinding("class.col-lg-12") bootstrapLgClass: boolean = true;
