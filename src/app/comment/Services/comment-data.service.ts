@@ -11,14 +11,23 @@ export class CommentDataService {
     constructor(private http: HttpClient) {
     }
 
-    getCommentPaginationModel(postId:string, pageNumber: number): Observable<Object> {
+    getCommentPaginationModel(pageNumber: number, postId?: string, searchQuery?: string): Observable<Object> {
         let url: string = "/Comments";
 
+        let params: HttpParams = new HttpParams()
+            .set("pageNumber", pageNumber.toString())
+            .set("pageSize", this.commentPageSize.toString());
+
+        if (postId) {
+            params.set("postId", postId);
+        }
+
+        if (searchQuery) {
+            params.set("searchQuery", searchQuery);
+        }
+
         let options = {
-            params: new HttpParams()
-                .set("postId", postId)
-                .set("pageNumber", pageNumber.toString())
-                .set("pageSize", this.commentPageSize.toString())
+            params: params
         };
 
         let observableObject: Observable<Object> = this.http.get(url, options);
@@ -40,38 +49,19 @@ export class CommentDataService {
         return observableObject;
     }
 
-    searchCommentWithPaginationModel(postId: string, searchQuery: string, pageNumber: number): Observable<Object> {
-        let url: string = "/Comments/Search";
-        
-        let options = {
-            headers: new HttpHeaders({
-                'Content-Type': 'application/json'
-            }),
-            params: new HttpParams()
-                .set("postId", postId)
-                .set("pageNumber", pageNumber.toString())
-                .set("pageSize", this.commentPageSize.toString())
-        };
-        
-        let observableObject: Observable<Object> = this.http.post(
-            url,
-            JSON.stringify({
-                Query: searchQuery
-            }),
-            options
-        );
-
-        return observableObject;
-    }
-
-    deleteComment(postId: string, commentId: string, pageNumber: number): Observable<Object> {
+    deleteComment(commentId: string, pageNumber: number, postId?: string): Observable<Object> {
         let url: string = "/Comments/" + commentId;
 
+        let params: HttpParams = new HttpParams()
+            .set("pageNumber", pageNumber.toString())
+            .set("pageSize", this.commentPageSize.toString());
+
+        if (postId) {
+            params.set("postId", postId);
+        }
+
         let options = {
-            params: new HttpParams()
-                .set("postId", postId)
-                .set("pageNumber", pageNumber.toString())
-                .set("pageSize", this.commentPageSize.toString())
+            params: params
         };
         
         let observableObject: Observable<Object> = this.http.delete(url, options);

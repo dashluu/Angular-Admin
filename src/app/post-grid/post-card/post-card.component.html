@@ -3,7 +3,7 @@
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <div class="post-card-action-container">
         <button class="select-post-card-btn post-card-action-btn" routerLink="/posts/{{ postCardModel.id }}">Edit</button>
-        <button class="show-post-comments-btn post-card-action-btn" routerLink="/comments/posts/{{ postCardModel.id }}">Comments</button>
+        <button class="show-post-comments-btn post-card-action-btn" routerLink="/posts/{{ postCardModel.id }}/comments" *ngIf="postCardModel.commentCount > 0">Comments</button>
         <button (click)="deletePost()" class="delete-post-card-btn post-card-action-btn">Delete</button>
       </div>
     </div>

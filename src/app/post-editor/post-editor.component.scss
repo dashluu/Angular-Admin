@@ -4,6 +4,34 @@ $font: #fafafa;
 $blue: #007aff;
 $red: #ff2d55;
 
+#post-section {
+    margin-top: 50px;
+}
+
+#image-picker {
+    display: none;
+}
+
+#image-picker-label, #image-src-btn, .submit-btn {
+    color: $blue;
+    background-color: $background;
+    border: 1px solid $border;
+    border-radius: 3px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+}
+
+#image-picker-label {
+    font-weight: 600;
+    padding: 3px 8px 3px 8px;
+}
+
+#image-src-btn {
+    font-weight: 600;
+    padding: 3px 8px 3px 8px;
+}
+
 .title {
     font-weight: 700;
     font-size: 30px;
@@ -30,16 +58,9 @@ $red: #ff2d55;
     height: 100px;
 }
 
-#submit-post-btn {
-    color: $blue;
-    background-color: $background;
-    border: 1px solid $border;
-    border-radius: 3px;
-    font-size: 13px;
-    width: 45px;
+.submit-btn {
+    width: 50px;
     padding-top: 3px;
     padding-bottom: 3px;
-    cursor: pointer;
-    outline: none;
     margin-top: 10px;
 }

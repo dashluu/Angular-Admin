@@ -6,7 +6,7 @@ import { Injectable } from "@angular/core";
     providedIn: 'root'
 })
 export class CommentMapperService {
-    mapObjectToCommentModel(object: Object): CommentModel {
+    mapCommentModelServerToClient(object: Object): CommentModel {
         let commentModel: CommentModel = {
             id: object["CommentId"],
             content: object["Content"]
@@ -15,22 +15,22 @@ export class CommentMapperService {
         return commentModel;
     }
 
-    mapObjectsToCommentModels(objects: Object): CommentModel[] {
+    mapCommentModelsServerToClient(objects: Object): CommentModel[] {
         let objectCount: number = Object.keys(objects).length;
         let commentModels: CommentModel[] = [];
 
         for (let i: number = 0; i < objectCount; i++) {
-            let commentModel: CommentModel = this.mapObjectToCommentModel(objects[i]);
+            let commentModel: CommentModel = this.mapCommentModelServerToClient(objects[i]);
             commentModels.push(commentModel);
         }
 
         return commentModels;
     }
 
-    mapObjectToCommentPaginationModel(object: Object): CommentPaginationModel {
+    mapCommentPaginationModelServerToClient(object: Object): CommentPaginationModel {
         
         let commentPaginationModel: CommentPaginationModel = {
-            comments: this.mapObjectsToCommentModels(object["Models"]),
+            comments: this.mapCommentModelsServerToClient(object["Models"]),
             hasNext: object["HasNext"],
             hasPrevious: object["HasPrevious"],
             pages: object["Pages"],

@@ -12,6 +12,7 @@ import { CategoryDataService } from '@app/category/Services/category-data.servic
 import { CategoryModel } from '@app/category/Models/category.model';
 import { CategoryMapperService } from '@app/category/Services/category-mapper.service';
 import { Subscription, Observable, EMPTY } from 'rxjs';
+import { ImageModel } from '@app/post-editor/Models/image.model';
 
 declare var tinymce: any;
 
@@ -23,6 +24,7 @@ declare var tinymce: any;
 export class PostEditorComponent implements OnInit, AfterViewInit, OnDestroy {
   editor: any;
   postId: string = "";
+  imageRootUrl: string = "http://localhost:51496/api/Images?name=";
   editedPostModel: EditedPostModel = new EditedPostModel();
   categoryModels: CategoryModel[];
 
@@ -104,7 +106,7 @@ export class PostEditorComponent implements OnInit, AfterViewInit, OnDestroy {
 
     subscription = postObservableObject.subscribe(object => {
       if (object["status"] === 200) {
-        this.editedPostModel = this.editedPostMapperService.mapObjectToEditedPostModel(object["data"]);
+        this.editedPostModel = this.editedPostMapperService.mapEditedPostModelServerToClient(object["data"]);
         this.postCategory.value = this.editedPostModel.category.id;
         this.editor.setContent(this.editedPostModel.content);
       }
@@ -123,9 +125,53 @@ export class PostEditorComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  submitEditedPost() {
-    this.editedPostModel.content = this.editor.getContent();
+  uploadImages() {
+    let imagePicker: HTMLInputElement = <HTMLInputElement>document.getElementById("image-picker");
+    let formData: FormData = new FormData();
+    let fileCount = imagePicker.files.length;
 
+    for (let i = 0; i < fileCount; i++) {
+      let file: File = imagePicker.files[i];
+      formData.append("images[]", file, file.name);
+    }
+
+    let observableObject: Observable<Object> = this.editedPostDataService.uploadImages(formData);
+
+    let subscription: Subscription = observableObject.subscribe(object => {
+      if (object["status"] === 200) {
+        let imageModels: ImageModel[] = this.editedPostMapperService.mapImageModelsServerToClient(object["data"]);
+        let imageCount: number = imageModels.length;
+
+        for (let i = 0; i < imageCount; i++) {
+          let imageModel: ImageModel = imageModels[i];
+          let imageSrc: string = this.imageRootUrl + imageModel.imageId + imageModel.extension;
+          this.insertImage(imageSrc);
+        }
+      }
+    });
+
+    this.subscriptions.push(subscription);
+  }
+
+  insertImage(imageSrc: string) {
+    let imageHtml: string = "<p><img src='" + imageSrc + "' style='max-width: 500px; max-height: 500px' /></p>";
+    this.editor.execCommand('mceInsertContent', false, imageHtml);
+  }
+
+  chooseImageSrc() {
+    let imageSrc: string = prompt("Insert image source: ");
+    this.insertImage(imageSrc);
+  }
+
+  submitEditedPost() {
+    let thumbnailImages = this.editor.dom.select("img:first-child");
+
+    if (thumbnailImages.length !== 0) {
+      let thumbnailImageSrc: string = this.editor.dom.getAttrib(thumbnailImages[0], "src");
+      this.editedPostModel.thumbnailImageSrc = thumbnailImageSrc;
+    }
+
+    this.editedPostModel.content = this.editor.getContent();
     let categoryIndex: number = this.postCategory.selectedIndex;
     let categoryModel: CategoryModel = this.categoryModels[categoryIndex];
 

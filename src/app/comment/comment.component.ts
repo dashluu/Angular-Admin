@@ -30,7 +30,7 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
   childMode: boolean;
   searchMode: boolean;
   isCommentListEmpty: boolean;
-  postId: string = "";
+  postId: string;
 
   @ViewChild('commentListContainer', { read: ViewContainerRef }) commentListContainer: any;
   @ViewChild('parentCommentContainer', { read: ViewContainerRef }) parentCommentContainer: any;
@@ -64,7 +64,7 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
         this.resetChildMode();
         this.resetSearchMode();
 
-        return this.commentDataService.getCommentPaginationModel(this.postId, this.commentPageNumber);
+        return this.commentDataService.getCommentPaginationModel(this.commentPageNumber, this.postId);
       })
     );
 
@@ -120,7 +120,7 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getComments() {
-    let observableObject: Observable<Object> = this.commentDataService.getCommentPaginationModel(this.postId, this.commentPageNumber);
+    let observableObject: Observable<Object> = this.commentDataService.getCommentPaginationModel(this.commentPageNumber, this.postId);
     
     let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
@@ -132,7 +132,7 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getCommentsCallback(object: Object) {
-    let commentPaginationModel: CommentPaginationModel = this.commentMapperService.mapObjectToCommentPaginationModel(object);
+    let commentPaginationModel: CommentPaginationModel = this.commentMapperService.mapCommentPaginationModelServerToClient(object);
 
     this.clearParentCommentView();
     this.updateCommentListView(commentPaginationModel);
@@ -153,7 +153,7 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
 
     let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
-        let commentPaginationModel: CommentPaginationModel = this.commentMapperService.mapObjectToCommentPaginationModel(object["data"]);
+        let commentPaginationModel: CommentPaginationModel = this.commentMapperService.mapCommentPaginationModelServerToClient(object["data"]);
         
         if (commentPaginationModel.comments.length == 0) {
           return;
@@ -202,11 +202,11 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    let observableObject: Observable<Object> = this.commentDataService.searchCommentWithPaginationModel(this.postId, searchQuery, this.searchCommentPageNumber);
+    let observableObject: Observable<Object> = this.commentDataService.getCommentPaginationModel(this.searchCommentPageNumber, this.postId, searchQuery);
 
     let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
-        let commentPaginationModel: CommentPaginationModel = this.commentMapperService.mapObjectToCommentPaginationModel(object["data"]);
+        let commentPaginationModel: CommentPaginationModel = this.commentMapperService.mapCommentPaginationModelServerToClient(object["data"]);
         
         this.clearParentCommentView();
         this.updateCommentListView(commentPaginationModel);
@@ -303,7 +303,7 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
     
-    let observableObject: Observable<Object> = this.commentDataService.deleteComment(this.postId, commentId, this.commentPageNumber);
+    let observableObject: Observable<Object> = this.commentDataService.deleteComment(commentId, this.commentPageNumber, this.postId);
     
     let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {

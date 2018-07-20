@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, OnDestroy } from '@angular/core';
+import { Component, OnInit, ViewChild, ViewContainerRef, ComponentRef, ComponentFactoryResolver, OnDestroy, AfterViewInit } from '@angular/core';
 import { PostCardComponent } from '@app/post-grid/post-card/post-card.component';
 import { PostCardModel } from '@app/post-grid/Models/post-card.model';
 import { PostCardDataService } from '@app/post-grid/Services/post-card-data.service';
@@ -14,11 +14,13 @@ import { PostGridUIService } from '@app/post-grid/Services/post-grid-ui.service'
   templateUrl: './post-grid.component.html',
   styleUrls: ['./post-grid.component.scss']
 })
-export class PostGridComponent implements OnInit, OnDestroy {
+export class PostGridComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild('postCardGridContainer', { read: ViewContainerRef }) postCardGridContainer: any;
   componentRef: ComponentRef<PostCardComponent>;
 
-  category: string = "";
+  postSearchBox: HTMLInputElement;
+
+  category: string;
 
   pageNumber: number;
   pages: number;
@@ -58,7 +60,7 @@ export class PostGridComponent implements OnInit, OnDestroy {
 
         this.resetSearchMode();
 
-        return this.postCardDataService.getPostCardPaginationModel(this.category, this.postCardPageNumber);
+        return this.postCardDataService.getPostCardPaginationModel(this.postCardPageNumber, this.category);
       })
     );
 
@@ -71,6 +73,10 @@ export class PostGridComponent implements OnInit, OnDestroy {
     this.subscriptions.push(subscription);
 
     this.postGridUIService.setPostGridUI(this);
+  }
+
+  ngAfterViewInit(): void {
+    this.postSearchBox = <HTMLInputElement>document.getElementById("post-search-box");
   }
 
   ngOnDestroy(): void {
@@ -97,7 +103,7 @@ export class PostGridComponent implements OnInit, OnDestroy {
   }
 
   getPostCards() {
-    let observableObject: Observable<Object> = this.postCardDataService.getPostCardPaginationModel(this.category, this.postCardPageNumber);
+    let observableObject: Observable<Object> = this.postCardDataService.getPostCardPaginationModel(this.postCardPageNumber, this.category);
     
     let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
@@ -106,6 +112,59 @@ export class PostGridComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptions.push(subscription);
+  }
+
+  searchPostKeyEvent(event: any) {
+    if (event.keyCode === 13) {
+      this.searchPostCardPageNumber = 1;
+      this.searchPost();
+    }
+    else {
+      let searchQuery: string = this.postSearchBox.value.trim();
+
+      if (searchQuery === "") {
+        this.getPostCards();
+      }
+    }
+  }
+
+  searchPost() {
+    let searchQuery: string = this.postSearchBox.value.trim();
+
+    if (searchQuery === "") {
+      return;
+    }
+
+    let observableObject: Observable<Object> = this.postCardDataService.getPostCardPaginationModel(this.searchPostCardPageNumber, this.category, searchQuery);
+
+    let subscription: Subscription = observableObject.subscribe(object => {
+      if (object["status"] === 200) {
+        let postCardPaginationModel: PostCardPaginationModel = this.postCardMapperService.mapPostCardPaginationModelServerToClient(object["data"]);
+
+        this.updatePostCardGridView(postCardPaginationModel);
+
+        this.searchPostCardPageNumber = postCardPaginationModel.pageNumber;
+        this.searchPostCardPages = postCardPaginationModel.pages;
+
+        this.pageNumber = this.searchPostCardPageNumber;
+        this.pages = this.searchPostCardPages;
+
+        this.searchMode = true;
+        this.isPostCardGridEmpty = this.pages === 0;
+      }
+    });
+
+    this.subscriptions.push(subscription);
+  }
+
+  updatePostCardGridView(postCardPaginationModel: PostCardPaginationModel) {
+    this.postCardGridContainer.clear();
+    let postCardModels: PostCardModel[] = postCardPaginationModel.postCards;
+    let postCardCount: number = postCardModels.length;
+
+    for (let i: number = 0; i < postCardCount; i++) {
+      this.createPostCard(postCardModels[i]);
+    }
   }
 
   deletePost(postId: string) {
@@ -119,7 +178,7 @@ export class PostGridComponent implements OnInit, OnDestroy {
       return;
     }
 
-    let observableObject: Observable<Object> = this.postCardDataService.deletePost(this.category, postId, this.postCardPageNumber);
+    let observableObject: Observable<Object> = this.postCardDataService.deletePost(postId, this.postCardPageNumber, this.category);
 
     let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
@@ -131,15 +190,9 @@ export class PostGridComponent implements OnInit, OnDestroy {
   }
 
   getPostCardsCallback(object: Object) {
-    let postCardPaginationModel: PostCardPaginationModel = this.postCardMapperService.mapObjectToPostCardPaginationModel(object);
-    let postCardModels: PostCardModel[] = postCardPaginationModel.postCards;
-    let postCardModelCount = postCardModels.length;
-
-    this.postCardGridContainer.clear();
-
-    for (var i = 0; i < postCardModelCount; i++) {
-      this.createPostCard(postCardModels[i]);
-    }
+    let postCardPaginationModel: PostCardPaginationModel = this.postCardMapperService.mapPostCardPaginationModelServerToClient(object);
+    
+    this.updatePostCardGridView(postCardPaginationModel);
 
     this.postCardPageNumber = postCardPaginationModel.pageNumber;
     this.postCardPages = postCardPaginationModel.pages;
@@ -153,12 +206,24 @@ export class PostGridComponent implements OnInit, OnDestroy {
   }
 
   getNextPostCards() {
-    this.postCardPageNumber++;
-    this.getPostCards();
+    if (!this.searchMode) {
+      this.postCardPageNumber++;
+      this.getPostCards();
+    }
+    else {
+      this.searchPostCardPageNumber++;
+      this.searchPost();
+    }
   }
 
   getPreviousPostCards() {
-    this.postCardPageNumber--;
-    this.getPostCards();
+    if (!this.searchMode) {
+      this.postCardPageNumber--;
+      this.getPostCards();
+    }
+    else {
+      this.searchPostCardPageNumber--;
+      this.searchPost();
+    }
   }
 }

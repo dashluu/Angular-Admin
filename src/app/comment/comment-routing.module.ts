@@ -7,7 +7,7 @@ import { CommentComponent } from './comment.component';
 const routes: Routes = [
   Route.withShell([
     { path: 'comments', component: CommentComponent, data: { title: extract('Comments') } },
-    { path: 'comments/posts/:id', component: CommentComponent, data: { title: extract('Comments') } }
+    { path: 'posts/:id/comments', component: CommentComponent, data: { title: extract('Comments') } }
   ])
 ];
 

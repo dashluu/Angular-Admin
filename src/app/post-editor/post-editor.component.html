@@ -1,8 +1,25 @@
 <div class="container" id="editor-section">
   <div class="row">
-    <div class="col-xs-12 col-sm-12 col-md-7 col-lg-6">
+    <div class="col-xs-12 col-sm-12 col-md-8 col-lg-7">
 
       <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="title">Upload images</div>
+          </div>
+
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <label for="image-picker" id="image-picker-label">Choose a file</label>
+            <input type="file" id="image-picker" accept="image/*" multiple />
+            <button type="button" id="image-src-btn" (click)="chooseImageSrc()">Choose from source</button>
+            <button type="button" id="upload-image-btn" class="submit-btn" (click)="uploadImages()">
+              <i class="fas fa-cloud-upload-alt"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="container" id="post-section">
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <div class="title">Edit post</div>
@@ -17,10 +34,6 @@
           </div>
 
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <input type="text" class="post-input" placeholder="Thumbnail image" id="post-thumbnail" [(ngModel)]="editedPostModel.thumbnailImageSrc" />
-          </div>
-
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
             <textarea class="post-input post-textarea" placeholder="Short description" id="post-short-description" [(ngModel)]="editedPostModel.shortDescription" ></textarea>
           </div>
 
@@ -29,7 +42,7 @@
           </div>
 
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-            <button type="submit" id="submit-post-btn" (click)="submitEditedPost()">
+            <button type="submit" id="submit-post-btn" (click)="submitEditedPost()" class="submit-btn">
               <i class="fas fa-cloud-upload-alt"></i>
             </button>
           </div>

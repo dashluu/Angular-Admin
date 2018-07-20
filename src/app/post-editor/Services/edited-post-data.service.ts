@@ -59,4 +59,11 @@ export class EditedPostDataService {
         return observableObject;
     }
 
+    uploadImages(formData: FormData) {
+        let url: string = "/Images/New";
+        let observableObject: Observable<Object> = this.http.post(url, formData);
+
+        return observableObject;
+    }
+
 }

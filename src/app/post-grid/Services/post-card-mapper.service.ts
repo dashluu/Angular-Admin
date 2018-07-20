@@ -6,7 +6,7 @@ import { Injectable } from "@angular/core";
     providedIn: 'root'
 })
 export class PostCardMapperService {
-    mapObjectToPostCardModel(object: Object): PostCardModel {
+    mapPostCardModelServerToClient(object: Object): PostCardModel {
         let postCardModel: PostCardModel = {
             id: object["PostId"],
             title: object["Title"],
@@ -20,22 +20,21 @@ export class PostCardMapperService {
         return postCardModel;
     }
 
-    mapObjectsToPostCardModels(objects: Object): PostCardModel[] {
+    mapPostCardModelsServerToClient(objects: Object): PostCardModel[] {
         let objectCount: number = Object.keys(objects).length;
         let postCardModels: PostCardModel[] = [];
 
         for (let i: number = 0; i < objectCount; i++) {
-            let postCardModel: PostCardModel = this.mapObjectToPostCardModel(objects[i]);
+            let postCardModel: PostCardModel = this.mapPostCardModelServerToClient(objects[i]);
             postCardModels.push(postCardModel);
         }
 
         return postCardModels;
     }
 
-    mapObjectToPostCardPaginationModel(object: Object): PostCardPaginationModel {
-
+    mapPostCardPaginationModelServerToClient(object: Object): PostCardPaginationModel {
         let postCardPaginationModel: PostCardPaginationModel = {
-            postCards: this.mapObjectsToPostCardModels(object["Models"]),
+            postCards: this.mapPostCardModelsServerToClient(object["Models"]),
             hasNext: object["HasNext"],
             hasPrevious: object["HasPrevious"],
             pages: object["Pages"],

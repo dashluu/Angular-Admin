@@ -2,7 +2,7 @@
   <div class="row category-card">
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
       <button type="button" class="select-category-btn category-card-action-btn" (click)="selectCategoryCard()">Select</button>
-      <button type="button" class="show-category-posts-btn category-card-action-btn" *ngIf="categoryModel.postCount > 0" routerLink="/posts/categories/{{ categoryModel.name }}">Posts</button>
+      <button type="button" class="show-category-posts-btn category-card-action-btn" *ngIf="categoryModel.postCount > 0" routerLink="/categories/{{ categoryModel.name }}/posts">Posts</button>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 category-data-container">Name: <strong>{{ categoryModel.name }}</strong></div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 category-data-container">Post Count: <span>{{ categoryModel.postCount }}</span></div>
