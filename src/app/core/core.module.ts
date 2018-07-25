@@ -5,17 +5,17 @@ import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
-import { ShellComponent } from './shell/shell.component';
-import { HeaderComponent } from './shell/header/header.component';
-import { RouteReusableStrategy } from './route-reusable-strategy';
-import { AuthenticationService } from './authentication/authentication.service';
-import { AuthenticationGuard } from './authentication/authentication.guard';
-import { I18nService } from './i18n.service';
-import { HttpService } from './http/http.service';
-import { HttpCacheService } from './http/http-cache.service';
-import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
-import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
-import { CacheInterceptor } from './http/cache.interceptor';
+import { ShellComponent } from '@app/core/shell/shell.component';
+import { HeaderComponent } from '@app/core/shell/header/header.component';
+import { RouteReusableStrategy } from '@app/core/route-reusable-strategy';
+import { AuthenticationService } from '@app/core/authentication/authentication.service';
+import { AuthenticationGuard } from '@app/core/authentication/authentication.guard';
+import { I18nService } from '@app/core/i18n.service';
+import { HttpService } from '@app/core/http/http.service';
+import { HttpCacheService } from '@app/core/http/http-cache.service';
+import { ApiPrefixInterceptor } from '@app/core/http/api-prefix.interceptor';
+import { ErrorHandlerInterceptor } from '@app/core/http/error-handler.interceptor';
+import { CacheInterceptor } from '@app/core/http/cache.interceptor';
 
 @NgModule({
   imports: [

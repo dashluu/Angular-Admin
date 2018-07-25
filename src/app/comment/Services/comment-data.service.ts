@@ -11,7 +11,7 @@ export class CommentDataService {
     constructor(private http: HttpClient) {
     }
 
-    getCommentPaginationModel(pageNumber: number, postId?: string, searchQuery?: string): Observable<Object> {
+    getCommentPaginationModel(pageNumber: number, postId?: string, userName?: string, searchQuery?: string): Observable<Object> {
         let url: string = "/Comments";
 
         let params: HttpParams = new HttpParams()
@@ -19,11 +19,15 @@ export class CommentDataService {
             .set("pageSize", this.commentPageSize.toString());
 
         if (postId) {
-            params.set("postId", postId);
+            params = params.set("postId", postId);
+        }
+
+        if (userName) {
+            params = params.set("userName", userName);
         }
 
         if (searchQuery) {
-            params.set("searchQuery", searchQuery);
+            params = params.set("searchQuery", searchQuery);
         }
 
         let options = {
@@ -49,7 +53,7 @@ export class CommentDataService {
         return observableObject;
     }
 
-    deleteComment(commentId: string, pageNumber: number, postId?: string): Observable<Object> {
+    deleteComment(commentId: string, pageNumber: number, postId?: string, userName?: string): Observable<Object> {
         let url: string = "/Comments/" + commentId;
 
         let params: HttpParams = new HttpParams()
@@ -57,7 +61,11 @@ export class CommentDataService {
             .set("pageSize", this.commentPageSize.toString());
 
         if (postId) {
-            params.set("postId", postId);
+            params = params.set("postId", postId);
+        }
+
+        if (userName) {
+            params = params.set("userName", userName);
         }
 
         let options = {

@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PostGridComponent } from './post-grid.component';
+import { PostGridComponent } from '@app/post-grid/post-grid.component';
 
 describe('PostGridComponent', () => {
   let component: PostGridComponent;

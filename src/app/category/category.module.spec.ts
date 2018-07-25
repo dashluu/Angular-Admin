@@ -1,4 +1,4 @@
-import { CategoryModule } from './category.module';
+import { CategoryModule } from '@app/category/category.module';
 
 describe('CategoryModule', () => {
   let categoryModule: CategoryModule;

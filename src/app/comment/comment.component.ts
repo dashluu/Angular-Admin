@@ -31,6 +31,7 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
   searchMode: boolean;
   isCommentListEmpty: boolean;
   postId: string;
+  userName: string;
 
   @ViewChild('commentListContainer', { read: ViewContainerRef }) commentListContainer: any;
   @ViewChild('parentCommentContainer', { read: ViewContainerRef }) parentCommentContainer: any;
@@ -56,6 +57,9 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
         if (params.has("id")) {
           this.postId = params.get("id");
         }
+        else if (params.has("name")) {
+          this.userName = params.get("name");
+        }
 
         this.pageNumber = 1;
         this.commentPageNumber = 1;
@@ -64,7 +68,7 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
         this.resetChildMode();
         this.resetSearchMode();
 
-        return this.commentDataService.getCommentPaginationModel(this.commentPageNumber, this.postId);
+        return this.commentDataService.getCommentPaginationModel(this.commentPageNumber, this.postId, this.userName);
       })
     );
 
@@ -120,7 +124,7 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   getComments() {
-    let observableObject: Observable<Object> = this.commentDataService.getCommentPaginationModel(this.commentPageNumber, this.postId);
+    let observableObject: Observable<Object> = this.commentDataService.getCommentPaginationModel(this.commentPageNumber, this.postId, this.userName);
     
     let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
@@ -161,6 +165,7 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
 
         let commentModel: CommentModel = {
           id: this.selectedCommentModel.id,
+          userName: this.selectedCommentModel.userName,
           content: this.selectedCommentModel.content
         };
 
@@ -202,7 +207,7 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    let observableObject: Observable<Object> = this.commentDataService.getCommentPaginationModel(this.searchCommentPageNumber, this.postId, searchQuery);
+    let observableObject: Observable<Object> = this.commentDataService.getCommentPaginationModel(this.searchCommentPageNumber, this.postId, this.userName, searchQuery);
 
     let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
@@ -303,7 +308,7 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
     
-    let observableObject: Observable<Object> = this.commentDataService.deleteComment(commentId, this.commentPageNumber, this.postId);
+    let observableObject: Observable<Object> = this.commentDataService.deleteComment(commentId, this.commentPageNumber, this.postId, this.userName);
     
     let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {

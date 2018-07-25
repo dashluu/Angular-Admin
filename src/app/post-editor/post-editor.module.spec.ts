@@ -1,4 +1,4 @@
-import { PostEditorModule } from './post-editor.module';
+import { PostEditorModule } from '@app/post-editor/post-editor.module';
 
 describe('PostEditorModule', () => {
   let postEditorModule: PostEditorModule;

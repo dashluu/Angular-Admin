@@ -2,11 +2,11 @@ import { TestBed, inject } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { HttpClient, HttpInterceptor } from '@angular/common/http';
 
-import { HttpService } from './http.service';
-import { HttpCacheService } from './http-cache.service';
-import { ErrorHandlerInterceptor } from './error-handler.interceptor';
-import { CacheInterceptor } from './cache.interceptor';
-import { ApiPrefixInterceptor } from './api-prefix.interceptor';
+import { HttpService } from '@app/core/http/http.service';
+import { HttpCacheService } from '@app/core/http/http-cache.service';
+import { ErrorHandlerInterceptor } from '@app/core/http/error-handler.interceptor';
+import { CacheInterceptor } from '@app/core/http/cache.interceptor';
+import { ApiPrefixInterceptor } from '@app/core/http/api-prefix.interceptor';
 
 describe('HttpService', () => {
   let httpCacheService: HttpCacheService;

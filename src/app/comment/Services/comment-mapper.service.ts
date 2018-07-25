@@ -9,6 +9,7 @@ export class CommentMapperService {
     mapCommentModelServerToClient(object: Object): CommentModel {
         let commentModel: CommentModel = {
             id: object["CommentId"],
+            userName: object["Username"],
             content: object["Content"]
         };
 

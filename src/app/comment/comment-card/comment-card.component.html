@@ -8,7 +8,7 @@
             <button (click)="showChildComments()" class="select-comment-btn comment-action-btn">Show more</button>
             <button (click)="deleteComment()" class="delete-comment-btn comment-action-btn">Delete</button>
           </div>
-          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comment-text comment-username">Whatever</div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comment-text comment-username">{{ commentModel.userName }}</div>
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 comment-text comment-content">{{ commentModel.content }}</div>
         </div>
       </div>

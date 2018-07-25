@@ -9,15 +9,16 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
-import { HomeModule } from './home/home.module';
-import { AboutModule } from './about/about.module';
-import { CategoryModule } from './category/category.module';
-import { CommentModule } from './comment/comment.module';
-import { PostGridModule } from './post-grid/post-grid.module';
-import { PostEditorModule } from './post-editor/post-editor.module';
-import { LoginModule } from './login/login.module';
-import { AppComponent } from './app.component';
-import { AppRoutingModule } from './app-routing.module';
+import { HomeModule } from '@app/home/home.module';
+import { AboutModule } from '@app/about/about.module';
+import { CategoryModule } from '@app/category/category.module';
+import { CommentModule } from '@app/comment/comment.module';
+import { PostGridModule } from '@app/post-grid/post-grid.module';
+import { PostEditorModule } from '@app/post-editor/post-editor.module';
+import { UserModule } from '@app/user/user.module';
+import { LoginModule } from '@app/login/login.module';
+import { AppComponent } from '@app/app.component';
+import { AppRoutingModule } from '@app/app-routing.module';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { AppRoutingModule } from './app-routing.module';
     CommentModule,
     PostGridModule,
     PostEditorModule,
+    UserModule,
     LoginModule,
     AppRoutingModule
   ],

@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+          <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8">
+            <input type="text" id="user-search-box" placeholder="Search" (keyup)="searchUserKeyEvent($event)" />
+          </div>
+          <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" *ngIf="!isUserListEmpty">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+          <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8">
+            <div class="nav-user-container">
+              <button class="nav-user-page-btn" *ngIf="pageNumber > 1" (click)="getPreviousUsers()">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <span class="nav-user-page-indicator">
+                <span class="nav-user-page-number">{{ pageNumber }}</span> of
+                <span class="nav-user-page-number">{{ pages }}</span>
+              </span>
+              <button class="nav-user-page-btn" *ngIf="pageNumber < pages" (click)="getNextUsers()">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+          <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+        </div>
+      </div>
+    </div>
+    <ng-template #userListContainer>
+    </ng-template>
+  </div>
+</div>
+

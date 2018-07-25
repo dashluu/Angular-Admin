@@ -1,0 +1,50 @@
+$background: rgba(13, 13, 13, 0.85);
+$border: #0d0d0d;
+$font: #fafafa;
+$blue: #007aff;
+$red: #ff2d55;
+$green: #4cd964;
+
+.user-container {
+    background-color: $background;
+    border-radius: 3px;
+    border: 1px solid $border;
+    margin-bottom: 10px;
+}
+
+.user-action-btn {
+    outline: none;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.user-comment-btn {
+    color: $blue;
+}
+
+.lockout-user-btn {
+    color: $red;
+}
+
+.user-username, .user-email{
+    overflow-wrap: break-word;
+}
+
+.user-username {
+    font-weight: 700;
+    font-size: 17px;
+    margin-bottom: 10px;
+    color: $font;
+}
+
+.user-email {
+    font-size: 14px;
+    color: $font;
+    padding-bottom: 5px;
+}

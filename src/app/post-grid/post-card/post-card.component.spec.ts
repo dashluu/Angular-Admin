@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PostCardComponent } from './post-card.component';
+import { PostCardComponent } from '@app/post-grid/post-card/post-card.component';
 
 describe('PostCardComponent', () => {
   let component: PostCardComponent;

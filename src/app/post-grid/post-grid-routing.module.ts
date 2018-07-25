@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
-import { PostGridComponent } from './post-grid.component';
+import { PostGridComponent } from '@app/post-grid/post-grid.component';
 
 const routes: Routes = [
   Route.withShell([

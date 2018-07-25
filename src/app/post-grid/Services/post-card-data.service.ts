@@ -19,11 +19,11 @@ export class PostCardDataService {
             .set("pageSize", this.postCardPageSize.toString());
 
         if (category) {
-            params.set("category", category);
+            params = params.set("category", category);
         }
 
         if (searchQuery) {
-            params.set("searchQuery", searchQuery);
+            params = params.set("searchQuery", searchQuery);
         }
         
         let options = {
@@ -43,7 +43,7 @@ export class PostCardDataService {
             .set("pageSize", this.postCardPageSize.toString());
 
         if(category) {
-            params.set("category", category);
+            params = params.set("category", category);
         }
 
         let options = {

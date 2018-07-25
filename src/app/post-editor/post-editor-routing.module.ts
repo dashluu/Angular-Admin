@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
-import { PostEditorComponent } from './post-editor.component';
+import { PostEditorComponent } from '@app/post-editor/post-editor.component';
 
 const routes: Routes = [
   Route.withShell([

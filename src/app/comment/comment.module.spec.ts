@@ -1,4 +1,4 @@
-import { CommentModule } from './comment.module';
+import { CommentModule } from '@app/comment/comment.module';
 
 describe('CommentModule', () => {
   let commentModule: CommentModule;

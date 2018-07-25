@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { Route, extract } from '@app/core';
-import { CategoryComponent } from './category.component';
+import { CategoryComponent } from '@app/category/category.component';
 
 const routes: Routes = [
   Route.withShell([

@@ -3,8 +3,8 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
-import { HomeComponent } from './home.component';
-import { QuoteService } from './quote.service';
+import { HomeComponent } from '@app/home/home.component';
+import { QuoteService } from '@app/home/quote.service';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;

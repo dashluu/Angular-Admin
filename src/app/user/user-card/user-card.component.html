@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+    <div class="col-xs-10 col-sm-10 col-md-8 col-lg-8">
+      <div class="container user-container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 user-action-container">
+            <button class="user-comment-btn user-action-btn" routerLink="/users/{{ userModel.userName }}/comments">Comment</button>
+            <button class="lockout-user-btn user-action-btn">Lockout</button>
+          </div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 user-text user-username">{{ userModel.userName }}</div>
+          <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 user-text user-email">{{ userModel.email }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-1 col-sm-1 col-md-2 col-lg-2"></div>
+  </div>
+</div>
