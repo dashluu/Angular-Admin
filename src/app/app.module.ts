@@ -9,8 +9,6 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { environment } from '@env/environment';
 import { CoreModule } from '@app/core';
 import { SharedModule } from '@app/shared';
-import { HomeModule } from '@app/home/home.module';
-import { AboutModule } from '@app/about/about.module';
 import { CategoryModule } from '@app/category/category.module';
 import { CommentModule } from '@app/comment/comment.module';
 import { PostGridModule } from '@app/post-grid/post-grid.module';
@@ -30,11 +28,9 @@ import { AppRoutingModule } from '@app/app-routing.module';
     NgbModule.forRoot(),
     CoreModule,
     SharedModule,
-    HomeModule,
-    AboutModule,
+    PostGridModule,
     CategoryModule,
     CommentModule,
-    PostGridModule,
     PostEditorModule,
     UserModule,
     LoginModule,

@@ -8,9 +8,10 @@ import { UserPaginationModel } from "@app/user/Models/user-pagination.model";
 export class UserMapperService {
     mapUserModelServerToClient(object: Object): UserModel {
         let userModel: UserModel = {
-            id: object["Id"],
             userName: object["UserName"],
-            email: object["Email"]
+            email: object["Email"],
+            lockoutEnabled: object["LockoutEnabled"],
+            isAdmin: object["IsAdmin"]
         };
 
         return userModel;

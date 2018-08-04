@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Observable, of, EMPTY } from 'rxjs';
+import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { map } from 'rxjs/operators';
 
 export interface Credentials {
   // Customize received credentials here
@@ -24,7 +26,9 @@ export class AuthenticationService {
 
   private _credentials: Credentials | null;
 
-  constructor() {
+  constructor(
+    private http: HttpClient
+  ) {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
@@ -38,12 +42,40 @@ export class AuthenticationService {
    */
   login(context: LoginContext): Observable<Credentials> {
     // Replace by proper authentication call
-    const data = {
-      username: context.username,
-      token: '123456'
+    let url: string = "/Users/Login";
+
+    let loginData = {
+      UserName: context.username,
+      Password: context.password,
+      IsPersistent: context.remember
     };
-    this.setCredentials(data, context.remember);
-    return of(data);
+
+    let options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    let observableCredentials: Observable<Credentials> = this.http.post(
+      url,
+      JSON.stringify(loginData),
+      options
+    ).pipe(map(object => {
+      if (object["data"]) {
+        let credentials: Credentials = {
+          username: context.username,
+          token: '123456'
+        };
+
+        this.setCredentials(credentials, context.remember);
+
+        return credentials;
+      } else {
+        throw new Error("Username or password not found.");
+      }
+    }));
+
+    return observableCredentials;
   }
 
   /**
@@ -52,8 +84,28 @@ export class AuthenticationService {
    */
   logout(): Observable<boolean> {
     // Customize credentials invalidation here
-    this.setCredentials();
-    return of(true);
+    let url: string = "/Users/Logout";
+
+    let options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    let observableBoolean = this.http.post(
+      url, 
+      "", 
+      options
+    ).pipe(map(object => {
+      if (object["status"] === 200) {
+        this.setCredentials();
+        return true;
+      } else {
+        throw new Error("User is not logged in.");
+      }
+    }));
+    
+    return observableBoolean;
   }
 
   /**

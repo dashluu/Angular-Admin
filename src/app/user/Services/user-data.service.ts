@@ -30,4 +30,22 @@ export class UserDataService {
 
         return observableObject;
     }
+
+    setUserLockout(username: string, lockout: boolean): Observable<Object> {
+        let url: string = "/Users/Lockout/" + username;
+
+        let params: HttpParams = new HttpParams()
+            .set("lockout", String(lockout));
+
+        let options = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            }),
+            params: params
+        };
+
+        let observableObject: Observable<Object> = this.http.post(url, "", options);
+
+        return observableObject;
+    }
 }

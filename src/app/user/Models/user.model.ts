@@ -1,5 +1,6 @@
 export class UserModel {
-    id: string;
     userName: string;
     email: string;
+    lockoutEnabled: boolean;
+    isAdmin: boolean;
 }

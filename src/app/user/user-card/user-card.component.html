@@ -6,7 +6,8 @@
         <div class="row">
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 user-action-container">
             <button class="user-comment-btn user-action-btn" routerLink="/users/{{ userModel.userName }}/comments">Comment</button>
-            <button class="lockout-user-btn user-action-btn">Lockout</button>
+            <button class="lockout-user-btn user-action-btn" (click)="userLockout()" *ngIf="!userModel.lockoutEnabled && !userModel.isAdmin">Lockout</button>
+            <button class="reverse-lockout-user-btn user-action-btn" (click)="reverseUserLockout()" *ngIf="userModel.lockoutEnabled && !userModel.isAdmin">Reverse Lockout</button>
           </div>
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 user-text user-username">{{ userModel.userName }}</div>
           <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 user-text user-email">{{ userModel.email }}</div>

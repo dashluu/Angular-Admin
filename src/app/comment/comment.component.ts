@@ -152,34 +152,38 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isCommentListEmpty = this.pages === 0;
   }
 
+  getChildCommentsCallback(object: Object) {
+    let commentPaginationModel: CommentPaginationModel = this.commentMapperService.mapCommentPaginationModelServerToClient(object);
+
+    if (commentPaginationModel.comments.length == 0) {
+      return;
+    }
+
+    let commentModel: CommentModel = {
+      id: this.selectedCommentModel.id,
+      userName: this.selectedCommentModel.userName,
+      content: this.selectedCommentModel.content
+    };
+
+    this.updateParentCommentView(commentModel);
+    this.updateCommentListView(commentPaginationModel);
+
+    this.childCommentPageNumber = commentPaginationModel.pageNumber;
+    this.childCommentPages = commentPaginationModel.pages;
+
+    this.pageNumber = this.childCommentPageNumber;
+    this.pages = this.childCommentPages;
+
+    this.childMode = true;
+    this.isCommentListEmpty = this.pages === 0;
+  }
+
   getChildComments() {
     let observableObject: Observable<Object> = this.commentDataService.getChildCommentPaginationModel(this.selectedCommentModel.id, this.childCommentPageNumber);
 
     let subscription: Subscription = observableObject.subscribe(object => {
       if (object["status"] === 200) {
-        let commentPaginationModel: CommentPaginationModel = this.commentMapperService.mapCommentPaginationModelServerToClient(object["data"]);
-        
-        if (commentPaginationModel.comments.length == 0) {
-          return;
-        }
-
-        let commentModel: CommentModel = {
-          id: this.selectedCommentModel.id,
-          userName: this.selectedCommentModel.userName,
-          content: this.selectedCommentModel.content
-        };
-
-        this.updateParentCommentView(commentModel);
-        this.updateCommentListView(commentPaginationModel);
-
-        this.childCommentPageNumber = commentPaginationModel.pageNumber;
-        this.childCommentPages = commentPaginationModel.pages;
-
-        this.pageNumber = this.childCommentPageNumber;
-        this.pages = this.childCommentPages;
-
-        this.childMode = true;
-        this.isCommentListEmpty = this.pages === 0;
+        this.getChildCommentsCallback(object["data"]);
       }
     });
 
@@ -295,6 +299,8 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
     else {
       this.searchComment();
     }
+
+    this.selectedCommentModel = undefined;
   }
 
   deleteComment(commentId: string) {
@@ -308,15 +314,28 @@ export class CommentComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
     
-    let observableObject: Observable<Object> = this.commentDataService.deleteComment(commentId, this.commentPageNumber, this.postId, this.userName);
-    
-    let subscription: Subscription = observableObject.subscribe(object => {
-      if (object["status"] === 200) {
-        this.getCommentsCallback(object["data"]);
-      }
-    });
+    if (!this.childMode) {
+      let observableObject: Observable<Object> = this.commentDataService.deleteComment(commentId, this.commentPageNumber, this.postId, this.userName);
 
-    this.subscriptions.push(subscription);
+      let subscription: Subscription = observableObject.subscribe(object => {
+        if (object["status"] === 200) {
+          this.getCommentsCallback(object["data"]);
+        }
+      });
+
+      this.subscriptions.push(subscription);
+    }
+    else {
+      let observableObject: Observable<Object> = this.commentDataService.deleteComment(commentId, this.childCommentPageNumber, this.postId, this.userName, this.selectedCommentModel.id);
+
+      let subscription: Subscription = observableObject.subscribe(object => {
+        if (object["status"] === 200) {
+          this.getChildCommentsCallback(object["data"]);
+        }
+      });
+
+      this.subscriptions.push(subscription);
+    }
   }
 
 }

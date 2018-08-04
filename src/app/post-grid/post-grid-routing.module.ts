@@ -6,6 +6,7 @@ import { PostGridComponent } from '@app/post-grid/post-grid.component';
 
 const routes: Routes = [
   Route.withShell([
+    { path: '', redirectTo: '/posts', pathMatch: 'full' },
     { path: 'posts', component: PostGridComponent, data: { title: extract('Posts') } },
     { path: 'categories/:name/posts', component: PostGridComponent, data: { title: extract('Posts') } }
   ])

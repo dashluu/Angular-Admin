@@ -6,7 +6,7 @@ import { Injectable } from "@angular/core";
     providedIn: 'root'
 })
 export class CommentDataService {
-    commentPageSize: number = 1;
+    commentPageSize: number = 3;
 
     constructor(private http: HttpClient) {
     }
@@ -53,7 +53,7 @@ export class CommentDataService {
         return observableObject;
     }
 
-    deleteComment(commentId: string, pageNumber: number, postId?: string, userName?: string): Observable<Object> {
+    deleteComment(commentId: string, pageNumber: number, postId?: string, userName?: string, parentCommentId?: string): Observable<Object> {
         let url: string = "/Comments/" + commentId;
 
         let params: HttpParams = new HttpParams()
@@ -66,6 +66,10 @@ export class CommentDataService {
 
         if (userName) {
             params = params.set("userName", userName);
+        }
+
+        if (parentCommentId) {
+            params = params.set("parentCommentId", parentCommentId);
         }
 
         let options = {
